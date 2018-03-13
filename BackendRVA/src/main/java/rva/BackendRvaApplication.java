@@ -23,8 +23,6 @@ public class BackendRvaApplication {
 			Arrays.sort(beanNames);
 			for (String beanName: beanNames) {
 				System.out.println(beanName);
-				// ovo smestamo u niz stringova, jer ce biti brdo njih, i pomocu for petlje 
-				// ispisemo niz odnosno sta nama treba
 			}
 		};
 	}

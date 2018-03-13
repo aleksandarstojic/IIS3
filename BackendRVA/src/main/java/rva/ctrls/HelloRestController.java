@@ -13,8 +13,7 @@ public class HelloRestController {
 	
 	@RequestMapping("zbir")
 	public String zbir() {
-		long x = Math.round(Math.random()*10); // Metoda random vraca neki decimalni broj
-		                                       // koji mnozimo sa 10 da bi dobili ceo broj
+		long x = Math.round(Math.random()*10); 
 		long y = Math.round(Math.random()*10);
 		return x+" + "+y+" = "+(x+y);
 	}
