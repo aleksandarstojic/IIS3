@@ -2,6 +2,9 @@ package rva.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -27,6 +30,7 @@ public class Dobavljac implements Serializable {
 
 	//bi-directional many-to-one association to Porudzbina
 	@OneToMany(mappedBy="dobavljac")
+	@JsonIgnore //faster xml import
 	private List<Porudzbina> porudzbinas;
 
 	public Dobavljac() {

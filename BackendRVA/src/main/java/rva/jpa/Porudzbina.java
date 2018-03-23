@@ -2,6 +2,10 @@ package rva.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Porudzbina.findAll", query="SELECT p FROM Porudzbina p")
+@JsonIgnoreProperties({"hibernateLazyInitalizer", "handler"})
 public class Porudzbina implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +43,7 @@ public class Porudzbina implements Serializable {
 
 	//bi-directional many-to-one association to StavkaPorudzbine
 	@OneToMany(mappedBy="porudzbina")
+	@JsonIgnore
 	private List<StavkaPorudzbine> stavkaPorudzbines;
 
 	public Porudzbina() {

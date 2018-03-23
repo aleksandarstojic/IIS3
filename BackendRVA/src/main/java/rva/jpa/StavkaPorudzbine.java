@@ -2,6 +2,9 @@ package rva.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 
 
@@ -12,6 +15,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="stavka_porudzbine")
 @NamedQuery(name="StavkaPorudzbine.findAll", query="SELECT s FROM StavkaPorudzbine s")
+@JsonIgnoreProperties({"hibernateLazyInitalizer", "handler"})
 public class StavkaPorudzbine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
