@@ -39,7 +39,7 @@ public class PorudzbinaRestController {
 	}
 	
 	@GetMapping("porudzbinePlacene")
-	public Collection<Porudzbina> getPorudzbina(@PathVariable("naziv") String naziv){
+	public Collection<Porudzbina> getPorudzbineByPlaceno(){
 		return porudzbinaRepository.findByPlacenoTrue();
 	}
 	
