@@ -35,19 +35,19 @@ public class ArtiklRestController {
 	}
 	
 	@GetMapping("artiklId/{id}")
-	@ApiOperation(value = "Vrаća artikl iz baze podataka ciji je ID vrednost prosledjena kao path varijabla")
+	@ApiOperation(value = "Vrаća artikl iz baze podataka ciji je ID vrednost prosleđena kao path varijabla")
 	public Artikl getArtikl(@PathVariable("id") Integer id) {
 		return artiklRepository.getOne(id);
 	}
 	
 	@GetMapping("artiklNaziv/{naziv}")
-	@ApiOperation(value = "Vrаća artikl iz baze podataka koji u naziv sadrzi string prosledjen kao path varijabla")
+	@ApiOperation(value = "Vrаća artikl iz baze podataka koji u naziv sadrzi string prosleđen kao path varijabla")
 	public Collection<Artikl> getArtiklByNaziv(@PathVariable("naziv") String naziv){
 		return artiklRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@DeleteMapping("artiklId/{id}")
-	@ApiOperation(value = "Brise artikl iz baze podataka ciji je ID vrednost prosledjena kao path varijabla")
+	@ApiOperation(value = "Briše artikl iz baze podataka ciji je ID vrednost prosleđena kao path varijabla")
 	public ResponseEntity<Artikl> deleteArtikl(@PathVariable("id") Integer id){
 		if(artiklRepository.existsById(id)) {
 			artiklRepository.deleteById(id);

@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import rva.jpa.Dobavljac;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Porudzbina;
 import rva.reps.PorudzbinaRepository;
 
 @RestController
+@Api(tags = {"Porudžbina CRUD operacije"})
 public class PorudzbinaRestController {
 	
 	@Autowired
@@ -29,22 +31,26 @@ public class PorudzbinaRestController {
 	private JdbcTemplate jdbcTemplate;
 	
 	@GetMapping("porudzbina")
+	@ApiOperation(value = "Vraća kolekciju svih porudžbina iz baze podataka")
 	public Collection<Porudzbina> getPorudzbine(){
 		return porudzbinaRepository.findAll(); 
 	}
 	
 	@GetMapping("porudzbinaId/{id}")
+	@ApiOperation(value = "Vraća porudžbinu iz baze podataka čiji je id vrednost prosleđena kao path varijabla")
 	public Porudzbina getPorudzbina(@PathVariable("id") Integer id) {
 		return porudzbinaRepository.getOne(id);
 	}
 	
 	@GetMapping("porudzbinePlacene")
+	@ApiOperation(value = "Vraća kolekciju porudžbina iz baze podataka koje u nazivu sadrže string prosleđen kao path varijabla")
 	public Collection<Porudzbina> getPorudzbineByPlaceno(){
 		return porudzbinaRepository.findByPlacenoTrue();
 	}
 	
 	@Transactional
 	@DeleteMapping("porudzbinaId/{id}")
+	@ApiOperation(value = "Briše porudžbinu iz baze podataka čiji je id vrednost prosleđena kao path varijabla")
 	public ResponseEntity<Porudzbina> deletePorudzbina(@PathVariable ("id") Integer id){
 		if(!porudzbinaRepository.existsById(id))
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -54,22 +60,24 @@ public class PorudzbinaRestController {
 	}
 	
 	//insert - Ovde koristimo POST metodu
-		@PostMapping("porudzbina")
-		public ResponseEntity<Porudzbina> insertPorudzbina(@RequestBody Porudzbina porudzbina){
-			if(porudzbinaRepository.existsById(porudzbina.getId())) {
-				return new ResponseEntity<> (HttpStatus.CONFLICT);
-			}
-			porudzbinaRepository.save(porudzbina);
-			return new ResponseEntity<>(HttpStatus.OK);
+	@PostMapping("porudzbina")
+	@ApiOperation(value = "Upisuje porudžbinu u bazu podataka")
+	public ResponseEntity<Porudzbina> insertPorudzbina(@RequestBody Porudzbina porudzbina){
+		if(porudzbinaRepository.existsById(porudzbina.getId())) {
+			return new ResponseEntity<> (HttpStatus.CONFLICT);
 		}
+		porudzbinaRepository.save(porudzbina);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 		
 		// update - Ovde koristimo PUT metodu
-		@PutMapping("porudzbina")
-		public ResponseEntity<Porudzbina> updatePorudzbina(@RequestBody Porudzbina porudzbina){
-			if(porudzbinaRepository.existsById(porudzbina.getId())) {
-				porudzbinaRepository.save(porudzbina);
-				return new ResponseEntity<> (HttpStatus.OK);
-			}
+	@PutMapping("porudzbina")
+	@ApiOperation(value = "Modifikuje postojeću porudžbinu u bazi podataka")
+	public ResponseEntity<Porudzbina> updatePorudzbina(@RequestBody Porudzbina porudzbina){
+		if(porudzbinaRepository.existsById(porudzbina.getId())) {
+			porudzbinaRepository.save(porudzbina);
+			return new ResponseEntity<> (HttpStatus.OK);
+		}
 			return new ResponseEntity<> (HttpStatus.NO_CONTENT);
 		}
 }

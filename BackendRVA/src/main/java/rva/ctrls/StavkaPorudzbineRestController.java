@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Porudzbina;
 import rva.jpa.StavkaPorudzbine;
 import rva.reps.PorudzbinaRepository;
 import rva.reps.StavkaPorudzbineRepository;
 
 @RestController
+@Api(tags = {"Stavka porudžbine CRUD operacije"})
 public class StavkaPorudzbineRestController {
-	//@Api(tags = {"Stavka porudÅ¾bine CRUD operacije"})
 	
 		@Autowired
 		private StavkaPorudzbineRepository stavkaPorudzbineRepository;
@@ -32,20 +32,20 @@ public class StavkaPorudzbineRestController {
 		private PorudzbinaRepository porudzbinaRepository;
 
 		@GetMapping(value = "stavkaPorudzbine")
-		//@ApiOperation(value = "VraÄ‡a kolekciju svih stavki porudÅ¾bina iz baze podataka")
+		@ApiOperation(value = "Vraća kolekciju svih stavki porudžbina iz baze podataka")
 		public Collection<StavkaPorudzbine> getStavkePorudzbine(){
 			return stavkaPorudzbineRepository.findAll();
 		}
 
 		@GetMapping(value = "stavkaPorudzbineId/{id}")
-		//@ApiOperation(value = "VraÄ‡a stavku porudÅ¾bine iz baze podataka Ä�iji je id vrednost prosleÄ‘ena kao path varijabla")
+		@ApiOperation(value = "Vraća stavku porudžbine iz baze podataka čiji je id vrednost prosleđena kao path varijabla")
 		public ResponseEntity<StavkaPorudzbine> getStavkaPorudzbine(@PathVariable("id") Integer id){
 			StavkaPorudzbine stavkaPorudzbine = stavkaPorudzbineRepository.getOne(id);
 			return new ResponseEntity<StavkaPorudzbine>(stavkaPorudzbine, HttpStatus.OK);
 		}
 
 		@GetMapping(value = "stavkeZaPorudzbinaId/{id}")
-		//@ApiOperation(value = "VraÄ‡a sve stavke porudÅ¾bine iz baze podataka vezane za porudÅ¾binu Ä�iji je id vrednost prosleÄ‘ena kao path varijabla")
+		@ApiOperation(value = "Vraća sve stavke porudžbine iz baze podataka vezane za porudžbinu čiji je id vrednost prosleđena kao path varijabla")
 		public Collection<StavkaPorudzbine> stavkaPoPorudzbiniId(@PathVariable("id") int id){
 			Porudzbina p = porudzbinaRepository.getOne(id);
 			return stavkaPorudzbineRepository.findByPorudzbina(p);
@@ -58,7 +58,7 @@ public class StavkaPorudzbineRestController {
 
 		@CrossOrigin
 		@DeleteMapping (value = "stavkaPorudzbineId/{id}")
-		//@ApiOperation(value = "BriÅ¡e stavku porudÅ¾bine iz baze podataka Ä�iji je id vrednost prosleÄ‘ena kao path varijabla")
+		@ApiOperation(value = "Briše stavku porudžbine iz baze podataka čiji je id vrednost prosleđena kao path varijabla")
 		public ResponseEntity<StavkaPorudzbine> deleteStavkaPorudzbine(@PathVariable("id") Integer id){
 			if(!stavkaPorudzbineRepository.existsById(id))
 				return new ResponseEntity<StavkaPorudzbine>(HttpStatus.NO_CONTENT);
@@ -69,7 +69,7 @@ public class StavkaPorudzbineRestController {
 		//insert
 		@CrossOrigin
 		@PostMapping(value = "stavkaPorudzbine")
-		//@ApiOperation(value = "Upisuje stavku porudÅ¾bine u bazu podataka")
+		@ApiOperation(value = "Upisuje stavku porudžbine u bazu podataka")
 		public ResponseEntity<Void> insertStavkaPorudzbine(@RequestBody StavkaPorudzbine stavkaPorudzbine){
 			if(stavkaPorudzbineRepository.existsById(stavkaPorudzbine.getId()))
 				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -81,7 +81,7 @@ public class StavkaPorudzbineRestController {
 		//update
 		@CrossOrigin
 		@PutMapping(value = "stavkaPorudzbine")
-		//@ApiOperation(value = "Modifikuje postojeÄ‡u stavku porudÅ¾bine u bazi podataka")
+		@ApiOperation(value = "Modifikuje postojeću stavku porudžbine u bazi podataka")
 		public ResponseEntity<Void> updateStavkaPorudzbine(@RequestBody StavkaPorudzbine stavkaPorudzbine){
 			if(!stavkaPorudzbineRepository.existsById(stavkaPorudzbine.getId()))
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
